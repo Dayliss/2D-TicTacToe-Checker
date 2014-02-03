@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<script>
+function solve(board){
+  var dim = Math.pow(board.length,0.5);
+  if(dim != Math.floor(dim)){
+    return "Error";
+  }
+  var check = checkDiagDown(board,0,dim);
+  if(check[0] && check[1] != 0){
+    return check[1] + " wins!";
+  }
+  for(var i = 0; i < dim; i++){
+    check = checkDown(board,i,dim);
+    if(check[0] && check[1] != 0){
+      return check[1] + " wins!";
+    }
+  }
+  for(var i = 0;i < dim; i++){
+    check = checkRight(board,i*dim,dim);
+    if(check[0] && check[1] != 0){
+      return check[1] + " wins!";
+    }
+  }
+  check = checkDiagUp(board,Math.pow(dim,2)-dim,dim);
+  if(check[0] && check[1] != 0){
+    return check[1] + " wins!";
+  }
+  return "no one wins!";
+}
+
+function checkDown(board,number,dim){
+  var value = [false,board[number]];
+  if(value[1] === undefined){
+    return value;
+  }
+  for(var i = 0; i < dim; i++){
+    if(board[number+(i*dim)] !== value[1]){
+      return value;
+    }
+  }
+  value[0] = true;
+  return value;
+}
+
+function checkRight(board,number,dim){
+  var value = [false,board[number]];
+  if(value[1] === undefined){
+    return value;
+  }
+  for(var i = 0; i < dim; i++){
+    if(board[number+(i)] !== value[1]){
+      return value;
+    }
+  }
+  value[0] = true;
+  return value;
+}
+function checkDiagDown(board,number,dim){
+  var value = [false,board[number]];
+  if(value[1] === undefined){
+    return value;
+  }
+  for(var i = 0; i < dim; i++){
+    if(board[(number+i)+(i*dim)] !== value[1]){
+      return value;
+    }
+  }
+  value[0] = true;
+  return value;
+}
+function checkDiagUp(board,number,dim){
+  var value = [false,board[number]];
+  if(value[1] === undefined){
+    return value;
+  }
+  for(var i = 0; i < dim; i++){
+    if(board[(number+i)-(i*dim)] !== value[1]){
+      return value;
+    }
+  }
+  value[0] = true;
+  return value;
+}
+</script>
+</html>
